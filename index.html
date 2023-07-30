@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: burlywood;
+            text-align: center;
+        }
+        pre{
+            background-color: azure;
+            width:600px;
+            text-align: center;
+            margin-left:400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>HIGH ORDER COMPONENTS</h1>
+    <p>A higher-order component (HOC) is an advanced technique in React for reusing component logic. <br>
+        HOCs are not part of the React API, per se. They are a pattern that emerges from React ’ s compositional nature.</p>
+        <p>a higher-order component is a function that takes a component and returns a new component.</p>
+     <h2>create a file withCounter.js</h2>
+    <pre>
+        import React from "react";
+       const UpdatedComponent = (OriginalComponent) => {
+        function NewComponent(props) {
+       //render OriginalComponent and pass on its props.
+        return <OriginalComponent />;
+         }
+       return NewComponent;
+       };
+      export default UpdatedComponent;
+    </pre>
+    <h2>create a file with name ClickCounter.js</h2>
+    <pre>
+        import withCounter from "./withCounter.js"
+        function ClickCounter() {
+        const [count, setCount] = useState(0); //default value of this state will be 0.
+        return (
+        <div>
+           {/*When clicked, increment the value of 'count'*/}
+           <button onClick= {( ) => setCount((count) => count + 1)}>Increment</button>
+            <p>Clicked: {count}</p> {/*Render the value of count*/}
+           </div>
+            );
+           }
+             export default withCounter( ClickCounter);
+    </pre>
+    
+    <h2>Create  a file name HoverCounter.js</h2>
+    <pre>
+        import withCounter from "./withCounter.js"
+        function HoverCounter(props) {
+          const [count, setCount] = useState(0);
+      return (
+       <div>
+      {/*If the user hovers over this button, then increment 'count'*/}
+      <button onMouseOver={( ) => setCount((count) => count + 1)}>
+        Increment
+      </button>
+         <p>
+        Clicked: {count}
+         </p>
+       </div>
+     );
+      }
+        export default withCounter( HoverCounter);
+    </pre>
+
+    <h1>PURE COMPONENETS</h1>
+    <p>React component is considered pure if it renders the same output for the same state and props.<br>
+     For this type of class component, React provides the PureComponent base class. Class components that <br>
+     extend the React.PureComponent class are treated as pure components.></p>
+     <pre>
+        import React, { PureComponent } from "react";
+
+        export default class PureClassComponent extends PureComponent {
+          constructor() {
+            super();
+            this.state = {
+              count: 0
+            };
+          }
+        
+          handleClick = () => {
+            this.setState((prevstate) => ({
+              count: prevstate.count + 1
+            }));
+          };
+        
+          render() {
+            return (
+              <>
+                <div>{this.state.count}</div>
+                <button onClick={this.handleClick}>Increament</button>
+              </>
+            );
+          }
+        }
+     </pre>
+</body>
+</html>
